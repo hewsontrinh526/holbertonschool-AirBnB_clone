@@ -2,7 +2,6 @@
 """ Base Model Module for serialisation and deserialisation """
 import uuid
 from datetime import datetime
-from models import storage
 
 class BaseModel:
     """ BaseModel class"""
@@ -21,7 +20,6 @@ class BaseModel:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
-            storage.new(self)
 
     def __str__(self):
         """ Prints given string """
@@ -31,7 +29,6 @@ class BaseModel:
     def save(self):
         """ Updates the public instance attribute updated_at to current"""
         self.updated_at = datetime.now()
-        storage.save()
 
     def to_dict(self):
         """ Returns a dictionary which contains all key/values of __dict__"""
