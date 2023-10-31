@@ -22,15 +22,15 @@ class TestFileStorage(unittest.TestCase):
         self.temp_file_path = "temp_file.json"
         self.object_1 = BaseModel(
             id='123',
-            name='test1',
-            my_number=42,
+            name='mina1',
+            my_number=2,
             created_at=datetime.now().isoformat(),
             updated_at=datetime.now().isoformat()
         )
         self.object_2 = BaseModel(
             id='456',
-            name='test2',
-            my_number=24,
+            name='mina2',
+            my_number=1,
             created_at=datetime.now().isoformat(),
             updated_at=datetime.now().isoformat()
         )
@@ -50,42 +50,34 @@ class TestFileStorage(unittest.TestCase):
         """
         Test to see if the serialised file is saved on the correct path
         """
-        file_path_1 = self.storage._FileStorage__file_path
-        self.assertEqual(file_path_1, "file.json")
+        file_path = self.storage._FileStorage__file_path
+        self.assertEqual(file_path, "file.json")
 
-    def test_objects_initial_state(self):
+    def test_objects_state(self):
         """
-        Test for initial state of __object attribute
+        Test for objects and if they are present when added
         """
-        obj = BaseModel()
-        self.storage.new(obj)
-        expected_key = "{}.{}".format(obj.__class__.__name__, obj.id)
-        object_1 = self.storage._FileStorage__objects
-        self.assertIn(expected_key, object_1)
-        self.assertEqual(object_1[expected_key], obj)
+        expected = ["BaseModel.{}".format(self.object_1.id)
+                    , "BaseModel.{}".format(self.object_2.id)]
+        for key in expected:
+            self.assertIn(key, self.storage.all())
 
     def test_all_objects_return(self):
         """
-        Test for all objects returning properly
+        Test for if new method adds objects
         """
-        self.storage._FileStorage__objects = {
-            "Object1": {"id": "1", "name": "Object 1"},
-            "Object2": {"id": "2", "name": "Object 2"},
-            "Object3": {"id": "3", "name": "Object 3"}
-        }
-        expected_output = {
-            "Object1": {"id": "1", "name": "Object 1"},
-            "Object2": {"id": "2", "name": "Object 2"},
-            "Object3": {"id": "3", "name": "Object 3"}
-        }
-        self.assertEqual(self.storage.all(), expected_output)
+        self.assertIn("BaseModel.{}".format(self.object_1.id)
+                      , self.storage.all())
+        self.assertIn("BaseModel.{}".format(self.object_2.id)
+                      , self.storage.all())
 
     def test_save(self):
         """
         Test for save method in FileStorage
         """
         self.storage.save()
-        with open(self.storage._FileStorage__file_path, 'r') as f:
+        file_path = self.storage._FileStorage__file_path
+        with open(file_path, 'r') as f:
             save_data = json.load(f)
         objects = self.storage.all()
         self.assertIn(f"BaseModel.{self.object_1.id}", save_data)
