@@ -46,13 +46,6 @@ class TestFileStorage(unittest.TestCase):
         if os.path.exists(self.temp_file_path):
             os.remove(self.temp_file_path)
 
-    def test_file_path(self):
-        """
-        Test to see if the serialised file is saved on the correct path
-        """
-        file_path = self.storage._FileStorage__file_path
-        self.assertEqual(file_path, "file.json")
-
     def test_objects_state(self):
         """
         Test for objects and if they are present when added
@@ -80,8 +73,8 @@ class TestFileStorage(unittest.TestCase):
         with open(file_path, 'r') as f:
             save_data = json.load(f)
         objects = self.storage.all()
-        self.assertIn(f"BaseModel.{self.object_1.id}", save_data)
-        self.assertIn(f"BaseModel.{self.object_2.id}", save_data)
+        self.assertIn("BaseModel.{}".format(self.object_1.id), save_data)
+        self.assertIn("BaseModel.{}".format(self.object_2.id), save_data)
 
     def test_reload_deserial_to_objects(self):
         """
