@@ -43,8 +43,10 @@ class TestFileStorage(unittest.TestCase):
         """
         Clean up after completion of tests
         """
-        if os.path.exists(self.temp_file_path):
-            os.remove(self.temp_file_path)
+        file_path = self.storage._FileStorage__file_path
+
+        with open(file_path, 'w') as file:
+            file.write("")
 
     def test_objects_state(self):
         """
@@ -52,6 +54,7 @@ class TestFileStorage(unittest.TestCase):
         """
         expected = ["BaseModel.{}".format(self.object_1.id)
                     , "BaseModel.{}".format(self.object_2.id)]
+
         for key in expected:
             self.assertIn(key, self.storage.all())
 
@@ -69,10 +72,14 @@ class TestFileStorage(unittest.TestCase):
         Test for save method in FileStorage
         """
         self.storage.save()
+
         file_path = self.storage._FileStorage__file_path
+
         with open(file_path, 'r') as f:
             save_data = json.load(f)
+
         objects = self.storage.all()
+
         self.assertIn("BaseModel.{}".format(self.object_1.id), save_data)
         self.assertIn("BaseModel.{}".format(self.object_2.id), save_data)
 
@@ -81,18 +88,29 @@ class TestFileStorage(unittest.TestCase):
         Test for reload method to deserialise files to objects
         """
         self.storage.reload()
+
         objects = self.storage.all()
+
         self.assertIn(f"BaseModel.{self.object_1.id}", objects)
         self.assertIn(f"BaseModel.{self.object_2.id}", objects)
 
     def test_reload(self):
+        """
+        Test for reload method
+        """
         initial = self.storage.all()
+
         self.object_1.name = 'test_1'
         self.object_1.save()
+
         self.object_2.name = 'test_2'
         self.object_2.save()
+
         self.storage.reload()
+
         reloaded = self.storage.all()
+
         for key in initial:
             self.assertEqual(reloaded.get(key).to_dict()
                              , initial.get(key).to_dict())
+
