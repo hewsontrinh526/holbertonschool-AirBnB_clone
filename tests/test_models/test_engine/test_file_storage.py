@@ -90,3 +90,24 @@ class TestFileStorage(unittest.TestCase):
         objects = self.storage.all()
         self.assertIn(f"BaseModel.{self.object_1.id}", save_data)
         self.assertIn(f"BaseModel.{self.object_2.id}", save_data)
+
+    def test_reload_deserial_to_objects(self):
+        """
+        Test for reload method to deserialise files to objects
+        """
+        self.storage.reload()
+        objects = self.storage.all()
+        self.assertIn(f"BaseModel.{self.object_1.id}", objects)
+        self.assertIn(f"BaseModel.{self.object_2.id}", objects)
+
+    def test_reload(self):
+        initial = self.storage.all()
+        self.object_1.name = 'test_1'
+        self.object_1.save()
+        self.object_2.name = 'test_2'
+        self.object_2.save()
+        self.storage.reload()
+        reloaded = self.storage.all()
+        for key in initial:
+            self.assertEqual(reloaded.get(key).to_dict()
+                             , initial.get(key).to_dict())
