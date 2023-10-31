@@ -35,3 +35,19 @@ class TestFileStorage(unittest.TestCase):
         object_1 = self.storage._FileStorage__objects
         self.assertIn(expected_key, object_1)
         self.assertEqual(object_1[expected_key], obj)
+
+    def test_all_objects_return(self):
+        """
+        Test for all objects returning properly
+        """
+        self.storage._FileStorage__objects = {
+            "Object1": {"id": "1", "name": "Object 1"},
+            "Object2": {"id": "2", "name": "Object 2"},
+            "Object3": {"id": "3", "name": "Object 3"}
+        }
+        expected_output = {
+            "Object1": {"id": "1", "name": "Object 1"},
+            "Object2": {"id": "2", "name": "Object 2"},
+            "Object3": {"id": "3", "name": "Object 3"}
+        }
+        self.assertEqual(self.storage.all(), expected_output)
