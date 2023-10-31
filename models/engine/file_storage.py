@@ -29,10 +29,3 @@ class FileStorage():
             json.dump(my_obj_dict, file_path)
 
     ## have to do reload
-#!/usr/bin/python3
-""" Call to file storage class """
-
-
-from models.engine.file_storage import FileStorage
-storage = FileStorage
-storage.reload()
