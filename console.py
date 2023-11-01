@@ -95,16 +95,13 @@ class HBNBCommand(cmd.Cmd):
             for value in current_dict.values():
                 current_list.append(str(value))
             print(current_list)
-            return
-        if argument_list[0] != "BaseModel":
+        elif argument_list[0] != "BaseModel":
             print("** class doesn't exist **")
-            return
-        if len(argument_list) == 1:
+        elif len(argument_list) == 1:
             for key in current_dict.keys():
                 if argument_list[0] in key:
                     current_list.append(str(current_dict[key]))
             print(current_list)
-            return
 
     def do_update(self, args):
         """
