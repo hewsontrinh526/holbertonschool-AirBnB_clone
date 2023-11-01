@@ -50,7 +50,7 @@ class HBNBCommand(cmd.Cmd):
         elif argument_list[0] not in classes.keys():
             print("** class doesn't exist **")
         else:
-            new_model = BaseModel()
+            new_model = classes[argument_list[0]]()
             new_model.save()
             print(new_model.id)
 
@@ -88,11 +88,10 @@ class HBNBCommand(cmd.Cmd):
         else:
             key_required = "{}.{}".format(argument_list[0], argument_list[1])
             current_dict = storage.all()
-            for key, value in current_dict.items():
-                if key == key_required:
-                    del current_dict[key]
-                    storage.save()
-                    return
+        if key_required in current_dict:
+            del current_dict[key_required]
+            storage.save()
+        else:
             print("** no instance found **")
 
     def do_all(self, args):
