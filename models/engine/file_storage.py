@@ -43,7 +43,7 @@ class FileStorage:
         try:
             with open(self.__file_path, "r") as f:
                 reloaded_dict = json.load(f)
-        except:
+        except Exception:
             reloaded_dict = {}
             pass
         for key, obj in reloaded_dict.items():
