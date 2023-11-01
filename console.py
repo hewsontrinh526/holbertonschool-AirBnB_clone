@@ -2,11 +2,15 @@
 """ Command interpreter project console """
 import cmd
 from models.base_model import BaseModel
+from models.user import User
 from models import storage
 import json
 import shlex
-from models.user import User
 
+classes = {
+    "BaseModel": BaseModel,
+    "User": User
+}
 class HBNBCommand(cmd.Cmd):
     """ Holberton Command prompt to access models' data"""
     prompt = '(hbnb) '
@@ -34,7 +38,7 @@ class HBNBCommand(cmd.Cmd):
         argument_list = args.split()
         if len(argument_list) < 1:
             print("** class name missing **")
-        elif argument_list[0] != "BaseModel":
+        elif argument_list[0] not in classes.keys():
             print("** class doesn't exist **")
         else:
             new_model = BaseModel()
@@ -49,7 +53,7 @@ class HBNBCommand(cmd.Cmd):
         argument_list = args.split()
         if len(argument_list) == 0:
             print("** class name missing **")
-        elif argument_list[0] != "BaseModel":
+        elif argument_list[0] not in classes.keys():
             print("** class doesn't exist **")
         elif len(argument_list) < 2:
             print("** instance id missing **")
@@ -68,7 +72,7 @@ class HBNBCommand(cmd.Cmd):
         argument_list = args.split()
         if len(argument_list) == 0:
             print("** class name missing **")
-        elif argument_list[0] != "BaseModel":
+        elif argument_list[0] not in classes.keys():
             print("** class doesn't exist **")
         elif len(argument_list) < 2:
             print("** instance id missing **")
@@ -95,7 +99,7 @@ class HBNBCommand(cmd.Cmd):
             for value in current_dict.values():
                 current_list.append(str(value))
             print(current_list)
-        elif argument_list[0] != "BaseModel":
+        elif argument_list[0] not in classes.keys():
             print("** class doesn't exist **")
         elif len(argument_list) == 1:
             for key in current_dict.keys():
@@ -113,7 +117,7 @@ class HBNBCommand(cmd.Cmd):
 
         if len(argument_list) == 0:
             print("** class name missing **")
-        elif argument_list[0] != "BaseModel":
+        elif argument_list[0] not in classes.keys():
             print("** class doesn't exist **")
         elif len(argument_list) < 2:
             print("** instance id missing **")
