@@ -88,20 +88,23 @@ class HBNBCommand(cmd.Cmd):
         class name
         """
         argument_list = args.split()
+        current_list = []
         current_dict = storage.all()
-        output_list = []
 
         if len(argument_list) == 0:
-            for tup_object in current_dict.items():
-                output_list.append(tup_object[1].__str__)
-            print(output_list)
-        elif argument_list[0] == "BaseModel":
             for value in current_dict.values():
-                if value.__class__.__name__ == argument_list[0]:
-                    output_list.append(value.__str__())
-            print(output_list)
-        else:
+                current_list.append(str(value))
+            print(current_list)
+            return
+        if argument_list[0] != "BaseModel":
             print("** class doesn't exist **")
+            return
+        if len(argument_list) == 1:
+            for key in current_dict.keys():
+                if argument_list[0] in key:
+                    current_list.append(str(current_dict[key]))
+            print(current_list)
+            return
 
     def do_update(self, args):
         """
