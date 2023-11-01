@@ -5,7 +5,7 @@ from models.base_model import BaseModel
 from models import storage
 import json
 import shlex
-
+from models.user import User
 
 class HBNBCommand(cmd.Cmd):
     """ Holberton Command prompt to access models' data"""
