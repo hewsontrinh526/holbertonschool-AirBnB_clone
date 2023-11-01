@@ -67,7 +67,7 @@ class HBNBCommand(cmd.Cmd):
         elif len(argument_list) < 2:
             print("** instance id missing **")
         else:
-            key = "{}.{}".format(argument_list[0], argument_list[1])
+            key = "{}".format(argument_list[1])
             try:
                 current_dict = storage.all()
             except Exception:
