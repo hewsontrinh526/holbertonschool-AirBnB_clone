@@ -68,11 +68,11 @@ class HBNBCommand(cmd.Cmd):
             print("** instance id missing **")
         else:
             key = "{}.{}".format(argument_list[0], argument_list[1])
-            current_dict = storage.all()
             try:
-                print(current_dict[key])
+                current_dict = storage.all()
             except Exception:
                 print("** no instance found ** &&&")
+            print(current_dict[key])
 
     def do_destroy(self, args):
         """
@@ -93,7 +93,7 @@ class HBNBCommand(cmd.Cmd):
                     del current_dict[key]
                     storage.save()
                     return
-            print("** no instance found ** $$$")
+            print("** no instance found **")
 
     def do_all(self, args):
         """
@@ -142,7 +142,7 @@ class HBNBCommand(cmd.Cmd):
                         setattr(value, argument_list[2], argument_list[3])
                         storage.save()
                         return
-            print("** no instance found ** ???")
+            print("** no instance found **")
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
