@@ -73,13 +73,14 @@ class HBNBCommand(cmd.Cmd):
         elif len(argument_list) < 2:
             print("** instance id missing **")
         else:
-            key = "{}.{}".format(argument_list[0], argument_list[1])
+            key_required = "{}.{}".format(argument_list[0], argument_list[1])
             current_dict = storage.all()
-            try:
-                del current_dict[key]
-                storage.all()
-            except Exception:
-                print("** no instance found **")
+            for key, value in current_dict.items():
+                if key == key_required:
+                    del current_dict[key]
+                    storage.save()
+                    return
+            print("** no instance found **")
 
     def do_all(self, args):
         """
