@@ -72,7 +72,7 @@ class HBNBCommand(cmd.Cmd):
                 current_dict = storage.all()
             except Exception:
                 print("** no instance found ** &&&")
-            print(current_dict[key])
+            print(key, current_dict[key])
 
     def do_destroy(self, args):
         """
