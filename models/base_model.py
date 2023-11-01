@@ -42,5 +42,4 @@ class BaseModel:
         new_dict["created_at"] = self.created_at.isoformat()
         new_dict["updated_at"] = self.updated_at.isoformat()
         new_dict["__class__"] = type(self).__name__
-        new_dict.pop('id', None)
         return new_dict
