@@ -81,5 +81,32 @@ class HBNBCommand(cmd.Cmd):
             except Exception:
                 print("** no instance found **")
 
+    def do_all(self, args):
+        """
+        Prints all string representation of all instances based or ot on the
+        class name
+        """
+        argument_list = args[0].split()
+        current_dict = storage.all()
+        output_list = []
+
+        if len(argument_list) == 0:
+            for tup_object in current_dict.items():
+                output_list.append(tup_object[1].__str__)
+            print(output_list)
+            return
+
+        class_name = argument_list[0]
+
+        if class_name != "BaseModel":
+            print("** class doesn't exist **")
+        else:
+            for tup_object in current_dict.items():
+                instance = tup_object[1]
+                instance_class = str(instance.__class__.__name__)
+                if instance_class == class_name:
+                    output_list.append(instance.__str__())
+            print(output_list)
+
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
