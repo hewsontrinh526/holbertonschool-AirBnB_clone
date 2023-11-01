@@ -33,6 +33,7 @@ class FileStorage:
         Deserialisation the JSON file to __objects
         """
         from models.base_model import BaseModel
+        from models.user import User
         reloaded_dict = {}
         try:
             with open(self.__file_path, "r") as f:
