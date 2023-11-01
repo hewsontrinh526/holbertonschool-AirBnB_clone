@@ -42,3 +42,13 @@ class TestBaseModel(unittest.TestCase):
         base_1 = BaseModel()
         output = "[BaseModel] ({}) {}".format(base_1.id, base_1.__dict__)
         self.assertEqual(base_1.__str__(), output)
+
+    def test_save_updates_updated_at(self):
+        """
+        Test for save method updates updated_at attribute
+        """
+        base_1 = BaseModel()
+        old_updated_at = base_1.updated_at
+        base_1.save()
+        new_updated_at = base_1.updated_at
+        self.assertNotEqual(old_updated_at, new_updated_at)
