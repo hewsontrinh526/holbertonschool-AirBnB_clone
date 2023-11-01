@@ -114,3 +114,16 @@ class TestFileStorage(unittest.TestCase):
             self.assertEqual(reloaded.get(key).to_dict()
                              , initial.get(key).to_dict())
 
+    def test_save_basemodel(self):
+        self.storage.new(self.object_1)
+        self.storage.save()
+        reloaded_storage = FileStorage()
+        reloaded_storage.reload()
+
+        self.assertIn("BaseModel.123", reloaded_storage.all())
+
+        saved_object = reloaded_storage.all()["BaseModel.123"]
+        self.assertEqual(saved_object.id, '123')
+        self.assertEqual(saved_object.name, 'mina1')
+        self.assertEqual(saved_object.my_number, 2)
+
