@@ -33,9 +33,9 @@ class TestBaseModel(unittest.TestCase):
         Test to save method
         """
         base_1 = BaseModel()
-        old_save = base_1.updated_at
+        new_save = base_1.updated_at
         base_1.save()
-        self.assertLess(old_save, base_1.updated_at)
+        self.assertLess(new_save, base_1.updated_at)
         self.assertTrue(os.path.exists("file.json"))
 
     def test_id_base(self):
