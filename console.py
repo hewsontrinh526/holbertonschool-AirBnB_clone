@@ -97,15 +97,15 @@ class HBNBCommand(cmd.Cmd):
 
         if len(argument_list) == 0:
             for value in current_dict.values():
-                current_list.append(str(value))
+                current_list.append(value.__str__())
             print(current_list)
-        elif argument_list[0] not in classes.keys():
+        elif argument_list[0] in classes.keys():
+            for value in current_dict.values():
+                if value.__class__.__name__ == argument_list[0]:
+                    current_list.append(value.__str__())
+            print(current_list)
+        else:
             print("** class doesn't exist **")
-        elif len(argument_list) == 1:
-            for key in current_dict.keys():
-                if argument_list[0] in key:
-                    current_list.append(str(current_dict[key]))
-            print(current_list)
 
     def do_update(self, args):
         """
