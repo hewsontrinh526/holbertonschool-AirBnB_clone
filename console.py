@@ -67,12 +67,12 @@ class HBNBCommand(cmd.Cmd):
         elif len(argument_list) < 2:
             print("** instance id missing **")
         else:
-            key = "{}".format(argument_list[1])
+            key = "{}.{}".format(argument_list[0], argument_list[1])
+            current_dict = storage.all()
             try:
-                current_dict = storage.all()
+                print(current_dict[key])
             except Exception:
-                print("** no instance found ** &&&")
-            print(current_dict)
+                print("** no instance found **")
 
     def do_destroy(self, args):
         """
