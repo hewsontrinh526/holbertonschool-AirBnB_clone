@@ -1,9 +1,10 @@
 #!/usr/bin/python3
 """ Command interpreter project console """
 import cmd
+from models import storage
 from models.base_model import BaseModel
 from models.user import User
-from models import storage
+
 import json
 import shlex
 
@@ -23,8 +24,7 @@ class HBNBCommand(cmd.Cmd):
     # EOF command method <Ctrl + D to exit>
     def do_EOF(self, args):
         """ EOF command to exit the program"""
-        print()
-        return True
+        raise SystemExit
 
     def emptyline(self):
         """ Do nothing on empty line + ENTER"""
