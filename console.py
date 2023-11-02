@@ -90,11 +90,11 @@ class HBNBCommand(cmd.Cmd):
         else:
             key_required = "{}.{}".format(argument_list[0], argument_list[1])
             current_dict = storage.all()
-        if key_required in current_dict:
-            del current_dict[key_required]
-            storage.save()
-        else:
-            print("** no instance found **")
+            if key_required in current_dict:
+                del current_dict[key_required]
+                storage.save()
+            else:
+                print("** no instance found **")
 
     def do_all(self, args):
         """
